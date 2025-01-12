@@ -19,7 +19,7 @@ router.use("/blogs", require("./blog"))
 router.use("/categories", require("./category"))
 
 //* comments
-// router.use("/comments", require("./comment"))
+router.use("/comments", require("./comment"))
 
 
 
