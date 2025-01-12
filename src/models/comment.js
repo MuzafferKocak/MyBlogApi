@@ -21,7 +21,7 @@ const CommentSchema = new mongoose.Schema(
     comment: {
       type: String,
       trim: true,
-      unique: true,
+      
     },
   },
   {

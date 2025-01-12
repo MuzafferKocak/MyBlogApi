@@ -30,7 +30,7 @@ const BlogSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      default: [],
+      
     },
     isPublish: {
       type: Boolean,
