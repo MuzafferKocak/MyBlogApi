@@ -43,7 +43,10 @@ const document = {
   security: [{ Token: [] }, { Bearer: [] }],
   definitions: {
     //* Models:
-    Blog: require("./src/models/blog").schema.obj
+    User: require("./src/models/user").schema.obj,
+    Category: require("./src/models/category").schema.obj,
+    Blog: require("./src/models/blog").schema.obj,
+    Comment: require("./src/models/comment").schema.obj,
   },
 };
 

@@ -94,7 +94,7 @@ module.exports = {
 
         res.status(data.deletedCount ? 204: 404).send({
           error: !data.deletedCount,
-          message: "Something went wrong, data might be deleted already.",
+          message: "Something went wrong, data possibly deleted.",
           data,
         })
   },
