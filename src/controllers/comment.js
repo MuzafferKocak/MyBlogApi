@@ -25,7 +25,7 @@ module.exports = {
       { path: "userId", select: "username email" },
       { path: "blogId", select: "name" },
     ]);
-
+   
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails(Comment),

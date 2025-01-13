@@ -19,6 +19,14 @@ module.exports = {
             </ul>
         `
     */
+
+    const data = await res.getModelList(User);
+
+    res.status(200).send({
+      error: false,
+      details: await res.getModelListDetails(User),
+      data,
+    });
   },
   create: async (req, res) => {
     /*
@@ -41,12 +49,60 @@ module.exports = {
         req.body.isStaff=false
         req.body.isAdmin=false
     */
+
+    try {
+      const data = await User.create(req.body);
+
+      //*Auth Login
+      //*Simple Token
+      const tokenData = await token.create({
+        userId: data._id,
+        token: passwordEncrypt(data._id + Date.now()),
+      });
+
+      //*JWT
+      const accessToken = jwt.sign(data.toJSON(), process.env.ACCESS_KEY, {
+        expiresIn: "30m",
+      });
+      const refreshToken = jwt.sign(
+        { _id: data._id, password: data.password },
+        process.env.REFRESH_KEY,
+        { expiresIn: "3d" }
+      );
+
+      //*Mail
+      // await sendWelcomeEmail(data.email, data.username);
+
+      res.status(201).send({
+        error: false,
+        token: tokenData.token,
+        bearer: {
+          access: accessToken,
+          refresh: refreshToken,
+        },
+        data,
+      });
+    } catch (error) {
+      res.status(500).send({
+        error: true,
+        message: "Email sending failed",
+        details: error.message,
+      });
+    }
   },
   read: async (req, res) => {
     /*
         #swagger.tags = ["Users"]
         #swagger.summary = "Get Single User"
     */
+
+    const id = req.user.isAdmin ? req.params.id : req.user.id;
+    const data = await User.findOne({ _id: id });
+
+    res.status(200).send({
+      error: false,
+      data,
+    });
   },
   update: async (req, res) => {
     /*
@@ -65,11 +121,30 @@ module.exports = {
             }
         }
     */
+
+    if (!req.user.isAdmin) req.params.id = req.user._id;
+    const data = await User.updateOne({ _id: req.params.id }, req.body, {
+      runValidators: true,
+    });
+
+    res.status(202).send({
+      error: false,
+      data,
+      new: await User.findOne({ _id: req.params.id }),
+    });
   },
   delete: async (req, res) => {
     /*
         #swagger.tags = ["Users"]
         #swagger.summary = "Delete User"
     */
+
+    const data = await User.deleteOne({ _id: req.params.id });
+
+    res.status(data.deletedCount ? 204 : 404).send({
+      error: !data.deletedCount,
+      message: "Something went wrong, data possibly deleted.",
+      data,
+    });
   },
 };

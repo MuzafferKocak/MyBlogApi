@@ -10,6 +10,8 @@ const router = require("express").Router();
 
 //* auth
 //* user
+router.use("/users", require("./user"))
+
 //* token
 
 //* blogs

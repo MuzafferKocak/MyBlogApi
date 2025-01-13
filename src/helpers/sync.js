@@ -85,12 +85,25 @@ module.exports = async () => {
       categoryId: category._id, 
       title: `Sample "${category.name}" Post - Blog ${i + 1}`, 
       content: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      isPublished: Boolean(i % 2), 
+      isPublish: Boolean(i % 2), 
       createdAt: getRandomDate(),
       image: categoryImages[category.name], 
     });
     blogs.push(blog);
   }
+
+  //* Add Likes to Blogs
+  // for (const blog of blogs) {
+  //   const randomUsers = users.sort(() => 0.5 - Math.random()).slice(0, Math.floor(Math.random() * users.length));
+  //   for (const user of randomUsers) {
+  //     try {
+  
+  //       await blog.like(user._id);
+  //     } catch (error) {
+  //       console.log(`Error adding like for user ${user.username} on blog ${blog.title}: ${error.message}`);
+  //     }
+  //   }
+  // }
   
 
   //* Comment for Blogs
@@ -98,7 +111,7 @@ module.exports = async () => {
     const comments = sampleComments.map((text, idx) => ({
       blogId: blog._id,
       userId: users[idx % 3]._id, 
-      content: text,
+      comment: text,
       createdAt: getRandomDate(),
     }));
     await Comment.create(comments);
