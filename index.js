@@ -5,6 +5,7 @@
 
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 /* ------------------------------------------------------- */
 //* Required Modules:
@@ -26,7 +27,11 @@ dbConnection();
 /* ------------------------------------------------------- */
 
 //*Middlewares:
-
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 //* Accept JSON
 app.use(express.json());
 
@@ -40,6 +45,8 @@ app.use(require("./src/middlewares/logger"));
 
 //*queryHandler
 app.use(require("./src/middlewares/queryHandler"));
+
+
 
 /* ------------------------------------------------------- */
 //* Routes:
