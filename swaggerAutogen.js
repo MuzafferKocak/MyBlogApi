@@ -15,8 +15,8 @@ const document = {
     version: packageJson.version,
     title: packageJson.title,
     description: packageJson.description,
-    termsOfService: "http://www.CourseName.com/#",
-    contact: { name: packageJson.author, email: "developer@CourseName.com" },
+    termsOfService: "http://www.mek.com/#",
+    contact: { name: packageJson.author, email: "developer@mek.com" },
     license: { name: packageJson.license },
   },
   host: `${HOST}:${PORT}`,
@@ -43,11 +43,14 @@ const document = {
   security: [{ Token: [] }, { Bearer: [] }],
   definitions: {
     //* Models:
+
     User: require("./src/models/user").schema.obj,
     Category: require("./src/models/category").schema.obj,
     Blog: require("./src/models/blog").schema.obj,
     Comment: require("./src/models/comment").schema.obj,
   },
+
+  
 };
 
 const routes = ["./index.js"];
