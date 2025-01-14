@@ -5,7 +5,8 @@
 
 const User = require("../models/user")
 const Token = require("../models/token")
-const passwordEncrypt = require("../helpers/passwordEncrypt")
+const passwordEncrypt = require("../helpers/passwordEncrypt");
+const { BadRequestError } = require("../errors/customError");
 
 module.exports = {
   login: async (req, res) => {
@@ -23,13 +24,13 @@ module.exports = {
         }
     */
 
-        const {username, password}= req.body
+        const {username, password, email}= req.body
 
-        if(username && password){
+        if((username || email) && password){
             const user = await User.findOne({username})
         }else{
             res.errorStatusCode =401
-            
+            throw new BadRequestError("")
         }
   },
   refresh: async (req, res) => {
