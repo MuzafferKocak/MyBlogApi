@@ -26,7 +26,7 @@ module.exports = {
     try {
       const { username, password, email } = req.body;
 
-      if (!(username || email) || !password) {
+      if (!(username || email) && password) {
         return res.status(400).send({
           error: true,
           message: "Please enter username or email and password.",
@@ -87,63 +87,6 @@ module.exports = {
         message: error.message || "An unexpected error occurred.",
       });
     }
-
-    // if ((username || email) && password) {
-    //   const user = await User.findOne({ $or: [{ username }, { email }] });
-
-    //   if (user && user.password == passwordEncrypt(password)) {
-    //     if (!user.isActive) {
-    //       throw new NotFoundError("User is inactive");
-    //     }
-
-    //     //*simple Token
-    //     let tokenData = await Token.findOne({ userId: user._id });
-
-    //     if (!tokenData) {
-    //       const tokenKey = passwordEncrypt(user._id + Date.now());
-
-    //       tokenData = await Token.create({
-    //         userId: user._id,
-    //         token: tokenKey,
-    //       });
-    //     }
-
-    //     //*JWT
-
-    //     const accessTime = "30m";
-    //     const accessToken = jwt.sign(
-    //       { id: user._id, username: user.username },
-    //       process.env.ACCESS_KEY,
-    //       {
-    //         expiresIn: accessTime,
-    //       }
-    //     );
-
-    //     const refreshData = { id: user._id };
-    //     const refreshTime = "3d";
-    //     const refreshToken = jwt.sign(refreshData, process.env.REFRESH_KEY, {
-    //       expiresIn: refreshTime,
-    //     });
-
-    //     res.status(200).send({
-    //       error: false,
-    //       token: tokenData?.token || null,
-    //       bearer: {
-    //         access: accessToken,
-    //         refresh: refreshToken,
-    //       },
-    //       user,
-    //     });
-    //   } else {
-    //     res.errorStatusCode = 401;
-    //     throw new UnauthorizedError("Wrong username or password.");
-    //   }
-    // } else {
-    //   res.errorStatusCode = 401;
-    //   throw new UnauthorizedError(
-    //     "Please enter username or email and password."
-    //   );
-    // }
   },
   refresh: async (req, res) => {
     /*

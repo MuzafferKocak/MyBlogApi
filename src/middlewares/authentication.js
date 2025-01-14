@@ -3,8 +3,6 @@
 |     //? Express - My Blog Api
 -------------------------------------------------*/
 
-
-
 //* app.use(authentication):
 
 const Token = require("../models/token");

@@ -22,7 +22,7 @@ require("express-async-errors");
 
 //*Connect to DB
 const { dbConnection } = require("./src/configs/dbConnection");
-dbConnection()
+dbConnection();
 /* ------------------------------------------------------- */
 
 //*Middlewares:
@@ -30,9 +30,16 @@ dbConnection()
 //* Accept JSON
 app.use(express.json());
 
+//* Static UloadFile:
+
+//* Check Authentication:
+app.use(require("./src/middlewares/authentication"));
+
+//* Logger:
+app.use(require("./src/middlewares/logger"));
 
 //*queryHandler
-app.use(require("./src/middlewares/queryHandler"))
+app.use(require("./src/middlewares/queryHandler"));
 
 /* ------------------------------------------------------- */
 //* Routes:
@@ -47,11 +54,11 @@ app.all("/", (req, res) => {
       redoc: "/documents/redoc",
       json: "/documents/json",
     },
-    user: req.user
+    user: req.user,
   });
 });
 //*Routes
-app.use(require("./src/routes"))
+app.use(require("./src/routes"));
 
 //* Not Founds
 app.all("*", (req, res) => {
@@ -60,8 +67,6 @@ app.all("*", (req, res) => {
     message: "Route is not found",
   });
 });
-
-
 
 //* errorHandler:
 app.use(require("./src/middlewares/errorHandler"));

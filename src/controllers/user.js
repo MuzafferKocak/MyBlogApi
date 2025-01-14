@@ -4,9 +4,10 @@
 -------------------------------------------------*/
 
 const User = require("../models/user");
-const Token = require("../models/token")
-const passwordEncrypt = require("../helpers/passwordEncrypt")
+const Token = require("../models/token");
+const passwordEncrypt = require("../helpers/passwordEncrypt");
 const jwt = require("jsonwebtoken");
+const { sendWelcomeEmail } = require("../services/emailService");
 
 module.exports = {
   list: async (req, res) => {
@@ -74,7 +75,7 @@ module.exports = {
       );
 
       //*Mail
-      // await sendWelcomeEmail(data.email, data.username);
+      await sendWelcomeEmail(data.email, data.username);
 
       res.status(201).send({
         error: false,
@@ -88,7 +89,7 @@ module.exports = {
     } catch (error) {
       res.status(500).send({
         error: true,
-        // message: "Email sending failed",
+        message: "Email sending failed",
         details: error.message,
       });
     }
@@ -99,7 +100,6 @@ module.exports = {
         #swagger.summary = "Get Single User"
     */
 
-    
     const data = await User.findOne({ _id: req.params.id });
 
     res.status(200).send({
@@ -125,7 +125,6 @@ module.exports = {
         }
     */
 
-    
     const data = await User.updateOne({ _id: req.params.id }, req.body, {
       runValidators: true,
     });
