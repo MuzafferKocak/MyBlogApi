@@ -5,6 +5,7 @@
 
 const router = require("express").Router();
 const blog = require("../controllers/blog");
+
 /* ------------------------------------------------------- */
 
 router.route("/").get(blog.list).post(blog.create);
@@ -16,5 +17,10 @@ router
   .patch(blog.update)
   .delete(blog.delete);
 
+  
   /* ------------------------------------------------------- */
+  // router.route("/:id/postLike").post(blog.postLike);
+router.patch("/:id/like", blog.like);
+router.patch("/:id/unlike", blog.unlike);
+/* ------------------------------------------------------- */
 module.exports = router;

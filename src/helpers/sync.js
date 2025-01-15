@@ -83,7 +83,7 @@ module.exports = async () => {
     const blog = await Blog.create({
       userId: users[i % users.length]._id, 
       categoryId: category._id, 
-      title: `Sample "${category.name}" Post - Blog ${i + 1}`, 
+      title: `Sample "${category.name}" Post ${i + 1}`, 
       content: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       isPublish: Boolean(i % 2), 
       createdAt: getRandomDate(),
@@ -114,7 +114,11 @@ module.exports = async () => {
       comment: text,
       createdAt: getRandomDate(),
     }));
-    await Comment.create(comments);
+    const createdComments = await Comment.create(comments);
+
+    await Blog.findByIdAndUpdate(blog._id, { 
+      $push: { comments: { $each: createdComments.map(c => c._id) } }
+    });
   }
 
   

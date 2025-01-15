@@ -4,6 +4,7 @@
 -------------------------------------------------*/
 
 const Comment = require("../models/comment");
+const Blog = require("../models/blog");
 
 module.exports = {
   list: async (req, res) => {
@@ -25,7 +26,7 @@ module.exports = {
       { path: "userId", select: "username email" },
       { path: "blogId", select: "name" },
     ]);
-   
+
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails(Comment),
@@ -45,12 +46,24 @@ module.exports = {
         }
     */
 
-    const data = await Comment.create(req.body);
+    const { blogId, userId, comment } = req.body;
 
-    res.status(201).send({
-      error: false,
-      data,
+    const data = await Comment.create({
+      blogId,
+      userId,
+      comment,
     });
+
+    await Blog.findByIdAndUpdate(blogId, { $push: { comments: data._id } }),
+      res.status(201).send({
+        error: false,
+        new: await Blog.findOne({_id: blogId}).populate([
+          { path: "userId", select: "username email" },
+          { path: "categoryId", select: "name" },
+          { path: "comments", select: "comment createdAt" },
+        ]),
+        data,
+      });
   },
   read: async (req, res) => {
     /*
