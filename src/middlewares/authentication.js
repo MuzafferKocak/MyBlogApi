@@ -20,11 +20,18 @@ module.exports = async (req, res, next) => {
       );
 
       req.user = tokenData ? tokenData.userId : undefined;
+      return next()
+
     } else if (tokenKey[0] == "Bearer") {
       //*JWT
       jwt.verify(tokenKey[1], process.env.ACCESS_KEY, (error, data) => {
+        if (error) {
+          return res.status(403).json({ message: "Invalid token" });
+        }
         req.user = data;
+        next()
       });
+      return
     }
   }
 
