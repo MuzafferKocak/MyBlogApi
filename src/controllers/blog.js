@@ -64,8 +64,8 @@ module.exports = {
       { path: "comments", select: "comment createdAt " },
     ]);
 
-    data.countOfVisitors += 1
-    await data.save()
+    data.countOfVisitors += 1;
+    await data.save();
 
     res.status(200).send({
       error: false,
@@ -109,81 +109,53 @@ module.exports = {
     });
   },
 
-  //* Blog Like
-  like: async (req, res) => {
+  postLike: async (req, res) => {
     /*
         #swagger.tags = ["Blogs"]
-        #swagger.summary = "Like Blog"
-        
+        #swagger.summary = "PostLike for a Blog"
+        #swagger.parameters['id'] = {
+            in: 'path',
+            required: true,
+            type: 'string',
+            description: 'Blog ID'
+        }
+        #swagger.parameters['body'] = {
+            in: 'body',
+            required: true,
+            schema: {
+                $ref: '#/definitions/PostLike'
+            }
+        }
     */
     try {
-      const blog = await Blog.findById(req.params.id);
-      if (!blog) {
-        return res.status(404).send({ error: true, message: "Blog not found" });
+      const blog = await Blog.findOne({ _id: req.params.id });
+      const { username } = req.body;
+      //       console.log(username)
+      // console.log(blog);
+
+      if (!username) {
+        return res.status(400).json({ message: "User ID is required." });
       }
 
-      
-      blog.likes = (parseInt(blog.likes) + 1).toString(); 
+      if (!blog) {
+        return res.status(404).json({ message: "Blog not found." });
+      }
+      if (!Array.isArray(blog.likes)) {
+        blog.likes = [];
+      }
+
+      if (blog.likes.includes(username)) {
+        blog.likes = blog.likes.filter((user) => user !== username);
+      } else {
+        blog.likes.push(username);
+      }
+
       await blog.save();
 
-      res.status(200).send({
-        error: false,
-        message: "Blog liked successfully",
-        blog,
-      });
-    } catch (error) {
-      res.status(500).send({
-        error: true,
-        message: "Something went wrong while liking the blog",
-      });
+      res.status(200).json(blog);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
     }
   },
-
-  //* Blog UnLike 
-  unlike: async (req, res) => {
-    /*
-        #swagger.tags = ["Blogs"]
-        #swagger.summary = "UnLike Blog"
-        
-    */
-    try {
-      const blog = await Blog.findById(req.params.id); 
-      if (!blog) {
-        return res.status(404).send({ error: true, message: "Blog not found" });
-      }
-
-      
-      const newLikeCount = Math.max(0, parseInt(blog.likes) - 1); 
-      blog.likes = newLikeCount.toString(); 
-
-      res.status(200).send({
-        error: false,
-        message: "Blog unliked successfully",
-        blog,
-      });
-    } catch (error) {
-      res.status(500).send({
-        error: true,
-        message: "Something went wrong while unliking the blog",
-      });
-    }
-  },
-  // postLike: async (req, res) => {
-  //   // console.log(req.user) buradan username'e erişebilirim.
-  //   const blog = await Blog.findOne({ _id: req.params.id });
-  //   // console.log(blog); buradan mevcut blog bilgilerine ulaşabiliyorum
-  //   const likeIndex = blog.likes.findIndex(
-  //     (like) => like.username === req.user.username
-  //   );
-  //   if (likeIndex === -1) {
-  //     blog.likes.push({ username: req.user.username });
-  //   } else {
-  //     blog.likes.splice(likeIndex, 1);
-  //   }
-  //   await blog.save();
-  //   res.status(200).send({
-  //     error: false,
-  //     data: await Blog.findOne({ _id: req.params.id }),
-  //   });
-  // },
 };

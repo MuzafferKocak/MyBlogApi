@@ -17,10 +17,9 @@ router
   .patch(blog.update)
   .delete(blog.delete);
 
-  
-  /* ------------------------------------------------------- */
-  // router.route("/:id/postLike").post(blog.postLike);
-router.patch("/:id/like", blog.like);
-router.patch("/:id/unlike", blog.unlike);
+/* ------------------------------------------------------- */
+
+router.post("/:id/like", blog.postLike);
+
 /* ------------------------------------------------------- */
 module.exports = router;

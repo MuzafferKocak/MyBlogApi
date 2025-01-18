@@ -47,7 +47,7 @@ module.exports = {
     */
 
     const { blogId, userId, comment } = req.body;
-
+    
     const data = await Comment.create({
       blogId,
       userId,
