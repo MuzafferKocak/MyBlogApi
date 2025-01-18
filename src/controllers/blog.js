@@ -112,7 +112,7 @@ module.exports = {
   postLike: async (req, res) => {
     /*
         #swagger.tags = ["Blogs"]
-        #swagger.summary = "PostLike for a Blog"
+        #swagger.summary = "Add/Remove Like"
         #swagger.parameters['id'] = {
             in: 'path',
             required: true,

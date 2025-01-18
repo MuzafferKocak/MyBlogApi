@@ -503,51 +503,35 @@
       }
     },
     "/blogs/{id}/like": {
-      "patch": {
+      "post": {
         "tags": [
           "Blogs"
         ],
-        "summary": "Like Blog",
+        "summary": "Add/Remove Like",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+            "type": "string",
+            "description": "Blog ID"
           },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/blogs/{id}/unlike": {
-      "patch": {
-        "tags": [
-          "Blogs"
-        ],
-        "summary": "UnLike Blog",
-        "description": "",
-        "parameters": [
           {
-            "name": "id",
-            "in": "path",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/PostLike"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -1072,11 +1056,13 @@
           "type": "object",
           "properties": {
             "type": {
-              "type": "function"
-            },
-            "default": {
-              "type": "number",
-              "example": 0
+              "type": "array",
+              "example": [
+                null
+              ],
+              "items": {
+                "type": "function"
+              }
             }
           }
         },
