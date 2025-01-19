@@ -119,13 +119,7 @@ module.exports = {
             type: 'string',
             description: 'Blog ID'
         }
-        #swagger.parameters['body'] = {
-            in: 'body',
-            required: true,
-            schema: {
-                $ref: '#/definitions/PostLike'
-            }
-        }
+        
     */
     try {
       const blog = await Blog.findOne({ _id: req.params.id });
