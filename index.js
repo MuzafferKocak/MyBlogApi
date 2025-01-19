@@ -75,6 +75,7 @@ app.all("*", (req, res) => {
   });
 });
 
+
 //* errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
 
