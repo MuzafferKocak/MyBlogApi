@@ -27,18 +27,18 @@ dbConnection();
 /* ------------------------------------------------------- */
 
 //*Middlewares:
-// const corsConfig = {
-//   origin: '',
-//   credentials: true,
-//   methods: ['GET', 'POST', 'PUT', 'DELETE']
-// }
-// app.use(cors(corsConfig))
-// app.options("", cors(corsConfig))
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
-);
+const corsConfig = {
+  origin: '',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}
+app.use(cors(corsConfig))
+app.options("", cors(corsConfig))
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//   })
+// );
 //* Accept JSON
 app.use(express.json());
 
