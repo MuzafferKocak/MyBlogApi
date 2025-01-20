@@ -48,7 +48,7 @@ app.use(express.json());
 app.use(require("./src/middlewares/authentication"));
 
 //* Logger:
-app.use(require("./src/middlewares/logger"));
+// app.use(require("./src/middlewares/logger"));
 
 //*queryHandler
 app.use(require("./src/middlewares/queryHandler"));
@@ -87,7 +87,7 @@ app.all("*", (req, res) => {
 app.use(require("./src/middlewares/errorHandler"));
 
 //* RUN SERVER:
-app.listen(PORT, HOST, () => console.log(`http://${HOST}:${PORT}`));
+app.listen( PORT, () => console.log(`http://${HOST}:${PORT}`));
 
 /* ------------------------------------------------------- */
 //* Syncronization (must be in commentLine):
