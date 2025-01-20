@@ -33,7 +33,7 @@ const corsConfig = {
   methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE']
 }
 app.use(cors(corsConfig))
-app.options("*", cors(corsConfig))
+app.options("", cors(corsConfig))
 // app.use(
 //   cors({
 //     origin: "http://localhost:3000",
