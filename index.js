@@ -36,7 +36,7 @@ dbConnection();
 // app.options("", cors(corsConfig))
 app.use(
   cors({
-    origin: "https://my-blog-api-alpha.vercel.app/",
+    origin: "http://localhost:3000",
   })
 );
 //* Accept JSON
