@@ -28,9 +28,9 @@ dbConnection();
 
 //*Middlewares:
 const corsConfig = {
-  origin: '',
+  origin: 'https://my-blog-api-alpha.vercel.app',
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
+  methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE']
 }
 app.use(cors(corsConfig))
 app.options("*", cors(corsConfig))
