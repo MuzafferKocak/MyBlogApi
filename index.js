@@ -27,18 +27,28 @@ dbConnection();
 /* ------------------------------------------------------- */
 
 //*Middlewares:
-const corsConfig = {
-  origin: 'https://my-blog-api-alpha.vercel.app',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE']
-}
-app.use(cors(corsConfig))
-app.options("", cors(corsConfig))
+// const corsConfig = {
+//   origin: 'https://my-blog-api-alpha.vercel.app',
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE']
+// }
+// app.use(cors(corsConfig))
+// app.options("", cors(corsConfig))
+
 // app.use(
 //   cors({
-//     origin: "http://localhost:3000",
-//   })
+//     origin: "https://my-blog-api-alpha.vercel.app",
+//   }
+// )
 // );
+
+app.use(
+  cors({
+    origin: "https://my-blog-api-alpha.vercel.app",
+  })
+);
+app.options("*", cors());
+
 //* Accept JSON
 app.use(express.json());
 
@@ -52,8 +62,6 @@ app.use(require("./src/middlewares/authentication"));
 
 //*queryHandler
 app.use(require("./src/middlewares/queryHandler"));
-
-
 
 /* ------------------------------------------------------- */
 //* Routes:
@@ -82,12 +90,11 @@ app.all("*", (req, res) => {
   });
 });
 
-
 //* errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
 
 //* RUN SERVER:
-app.listen( PORT, () => console.log(`http://${HOST}:${PORT}`));
+app.listen(PORT, () => console.log(`http://${HOST}:${PORT}`));
 
 /* ------------------------------------------------------- */
 //* Syncronization (must be in commentLine):
