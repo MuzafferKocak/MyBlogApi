@@ -45,8 +45,6 @@ dbConnection();
 app.use(
   cors({
     origin: "https://my-blog-api-alpha.vercel.app",
-    
-    methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE'],
     credentials: true,
   })
 );
