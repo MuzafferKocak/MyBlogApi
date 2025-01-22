@@ -45,17 +45,14 @@ dbConnection();
 app.use(
   cors({
     origin: "https://blog-app-murex-two.vercel.app/",
+    methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
     credentials: true,
-    optionsSuccessStatus: 200,
   })
 );
 app.options("*", cors());
 
-app.use((req, res, next) => {
-  console.log(`Received request: ${req.method} ${req.url}`);
-  console.log('Headers:', req.headers);
-  next();
-});
+
 
 app.options('*', (req, res) => {
   console.log('OPTIONS request received');
