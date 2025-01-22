@@ -27,30 +27,36 @@ dbConnection();
 /* ------------------------------------------------------- */
 
 //*Middlewares:
-// const corsConfig = {
-//   origin: 'https://my-blog-api-alpha.vercel.app',
-//   credentials: true,
-//   methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE']
-// }
-// app.use(cors(corsConfig))
-// app.options("", cors(corsConfig))
+const corsConfig = {
+  origin: 'https://blog-app-murex-two.vercel.app',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE']
+}
+app.use(cors(corsConfig))
+app.options("*", cors(corsConfig))
 
 // app.use(
 //   cors({
-//     origin: "https://my-blog-api-alpha.vercel.app",
+//     origin: "https://blog-app-murex-two.vercel.app",
 //   }
 // )
 // );
 
-app.use(
-  cors({
-    origin: "https://blog-fgozjid53-muzafferkocaks-projects.vercel.app",
-    methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
-    credentials: true,
-  })
-);
-app.options("*", cors());
+// app.use(
+//   cors({
+//     origin: "https://blog-app-murex-two.vercel.app",
+//     methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
+//     credentials: true,
+//   })
+// );
+// app.options("*", cors());
+
+app.use((req, res, next) => {
+  console.log(`Received request: ${req.method} ${req.url}`);
+  console.log('Headers:', req.headers);
+  next();
+});
 
 
 
