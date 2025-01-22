@@ -51,6 +51,22 @@ app.use(
 );
 app.options("*", cors());
 
+app.use((req, res, next) => {
+  console.log(`Received request: ${req.method} ${req.url}`);
+  console.log('Headers:', req.headers);
+  next();
+});
+
+app.options('*', (req, res) => {
+  console.log('OPTIONS request received');
+  res.set({
+    'Access-Control-Allow-Origin': 'https://blog-app-murex-two.vercel.app',
+    'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+    'Access-Control-Allow-Headers': 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+  });
+  res.sendStatus(204);
+});
+
 //* Accept JSON
 app.use(express.json());
 
