@@ -44,8 +44,8 @@ dbConnection();
 
 app.use(
   cors({
-    origin: "https://my-blog-api-alpha.vercel.app",
-    
+    origin: "https://blog-app-murex-two.vercel.app/",
+    credentials: true,
     optionsSuccessStatus: 200,
   })
 );
