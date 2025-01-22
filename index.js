@@ -44,7 +44,7 @@ dbConnection();
 
 app.use(
   cors({
-    origin: "https://blog-app-murex-two.vercel.app/",
+    origin: "https://blog-fgozjid53-muzafferkocaks-projects.vercel.app",
     methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
     credentials: true,
