@@ -27,23 +27,23 @@ dbConnection();
 /* ------------------------------------------------------- */
 
 //*Middlewares:
-const corsConfig = {
-  origin: 'https://blog-app-murex-two.vercel.app',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE']
-}
-app.use(cors(corsConfig))
-app.options("*", cors(corsConfig))
+// const corsConfig = {
+//   origin: 'https://blog-app-murex-two.vercel.app',
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE']
+// }
+// app.use(cors(corsConfig))
+// app.options("*", cors(corsConfig))
 
-// app.use(
-//   cors({
-//     origin: "https://blog-app-murex-two.vercel.app",
-//     methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
-//     credentials: true,
-//   })
-// );
-// app.options("*", cors());
+app.use(
+  cors({
+    origin: "https://blog-app-murex-two.vercel.app",
+    methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
+    credentials: true,
+  })
+);
+app.options("*", cors());
 
 
 //* Accept JSON
