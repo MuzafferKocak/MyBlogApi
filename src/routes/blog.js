@@ -5,7 +5,7 @@
 
 const router = require("express").Router();
 const blog = require("../controllers/blog");
-const { isLogin, isOwner } = require("../middlewares/permissions");
+const { isLogin, isOwner, isAdmin } = require("../middlewares/permissions");
 /* ------------------------------------------------------- */
 
 router.route("/").get(blog.list).post(isLogin, blog.create);
@@ -13,9 +13,9 @@ router.route("/").get(blog.list).post(isLogin, blog.create);
 router
   .route("/:id")
   .get(isLogin, blog.read)
-  .put(isLogin, isOwner, blog.update)
-  .patch(isLogin, isOwner, blog.update)
-  .delete(isLogin, isOwner, blog.delete);
+  .put(isLogin, isOwner, isAdmin, blog.update)
+  .patch(isLogin, isOwner, isAdmin, blog.update)
+  .delete(isLogin, isOwner, isAdmin, blog.delete);
 
 /* ------------------------------------------------------- */
 

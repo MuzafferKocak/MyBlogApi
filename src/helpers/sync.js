@@ -25,7 +25,7 @@ const categories = [
     "Travel", ];
 
     const categoryImages = {
-        World: "https://cdn.pixabay.com/photo/2015/01/27/09/58/landscape-612751_1280.jpg",
+        World: "https://cdn.pixabay.com/photo/2013/07/12/16/57/world-map-151576_1280.png",
         Technology: "https://cdn.pixabay.com/photo/2014/08/26/21/48/tablet-428019_1280.jpg",
         Design: "https://cdn.pixabay.com/photo/2016/11/22/19/08/design-1853158_1280.jpg",
         Culture: "https://cdn.pixabay.com/photo/2016/03/26/13/09/person-1281601_1280.jpg",
