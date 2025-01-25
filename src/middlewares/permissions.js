@@ -49,11 +49,12 @@ module.exports = {
       }
 
       //* Blog owner
-      if (blog.userId.toString() !== user._id.toString()) {
-        return res.status(403).send("You are not the owner of this blog");
+      if (user.isAdmin || blog.userId.toString() === user._id.toString()) {
+        return next()
       }
+      return res.status(403).send("You are not the owner of this blog");
 
-      next();
+    
     } catch (err) {
       res.status(500).send("Error checking ownership: " + err.message);
     }
