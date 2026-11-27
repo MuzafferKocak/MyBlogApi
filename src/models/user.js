@@ -7,6 +7,7 @@ const { mongoose } = require("../configs/dbConnection");
 /* ------------------------------------------------------- */
 
 const passwordEncrypt = require("../helpers/passwordEncrypt");
+const { BadRequestError } = require("../errors/customError");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -62,7 +63,7 @@ UserSchema.pre("save", function (next) {
     data.email &&
     !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email)
   ) {
-    return next(new Error("Email is not valid"));
+    return next(new BadRequestError("Email is not valid"));
   }
 
   //* Password Validation:
@@ -71,8 +72,8 @@ UserSchema.pre("save", function (next) {
     !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.]).{8,}$/.test(data.password)
   ) {
     return next(
-      new Error(
-        "Password must be at least 8 characters long, including one uppercase letter and one special character."
+      new BadRequestError(
+        "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number and a special character (@$!%*?&.)."
       )
     );
   }
