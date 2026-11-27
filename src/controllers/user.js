@@ -87,10 +87,25 @@ module.exports = {
         data,
       });
     } catch (error) {
+      //* Benutzername oder E-Mail schon vergeben (MongoDB-Fehlercode 11000)
+      if (error.code === 11000) {
+        const field = Object.keys(error.keyValue || {})[0] || "username or email";
+        return res.status(409).send({
+          error: true,
+          message: `This ${field} is already taken.`,
+        });
+      }
+
+      //* Falsche Eingabe: E-Mail-Format, Passwort-Regel oder fehlendes Pflichtfeld
+      if (error.statusCode === 400 || error.name === "ValidationError") {
+        return res.status(400).send({ error: true, message: error.message });
+      }
+
+      //* Alles andere: unbekannter Fehler, keine Technik-Details nach außen
+      console.log(error);
       res.status(500).send({
         error: true,
-        message: "Email sending failed",
-        details: error.message,
+        message: "Registration failed. Please try again.",
       });
     }
   },
